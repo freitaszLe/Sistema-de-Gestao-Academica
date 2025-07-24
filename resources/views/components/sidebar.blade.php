@@ -24,8 +24,9 @@
                 <span class="mr-3">📚</span>
                 Disciplinas
             </a>
-            <a href="#" {{-- A rota para professores será criada depois --}}
-               class="flex items-center px-4 py-2 mt-2 text-sm font-semibold rounded-lg text-gray-600 cursor-not-allowed">
+            <a href="{{ route('teachers.index') }}"
+                class="flex items-center px-4 py-2 mt-2 text-sm font-semibold rounded-lg text-gray-300 hover:bg-gray-700 hover:text-white
+                    {{ request()->routeIs('teachers.*') ? 'bg-gray-700 text-white' : '' }}">
                 <span class="mr-3">👨‍🏫</span>
                 Professores
             </a>
