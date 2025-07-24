@@ -12,15 +12,10 @@ class EnrollmentController extends Controller
 {
     public function index()
     {
-        // Pega todas as turmas com seus relacionamentos para evitar N+1 queries
-        $schedules = Schedule::with(['subject', 'teacher'])->get();
-        // Pega os IDs das turmas em que o aluno já se inscreveu (qualquer status)
-        $enrolled_ids = Auth::user()->enrollments()->pluck('schedules.id')->toArray();
+    // Pega TODAS as matrículas do aluno, com status e dados da turma
+    $enrollments = Auth::user()->enrollments()->with(['subject', 'teacher'])->get();
 
-        return view('student.enroll.index', [
-            'schedules' => $schedules,
-            'enrolled_ids' => $enrolled_ids,
-        ]);
+    return view('student.enroll.index', ['enrollments' => $enrollments]);
     }
 
     public function store(Request $request)
