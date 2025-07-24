@@ -24,20 +24,44 @@
                 <span class="mr-3">📚</span>
                 Disciplinas
             </a>
-            <a href="#" {{-- A rota para professores será criada depois --}}
-               class="flex items-center px-4 py-2 mt-2 text-sm font-semibold rounded-lg text-gray-600 cursor-not-allowed">
+            <a href="{{ route('teachers.index') }}"
+                class="flex items-center px-4 py-2 mt-2 text-sm font-semibold rounded-lg text-gray-300 hover:bg-gray-700 hover:text-white
+                    {{ request()->routeIs('teachers.*') ? 'bg-gray-700 text-white' : '' }}">
                 <span class="mr-3">👨‍🏫</span>
                 Professores
             </a>
+            {{-- ... links de Disciplinas e Professores ... --}}
+
+        <a href="{{ route('schedules.index') }}"
+        class="flex items-center px-4 py-2 mt-2 text-sm font-semibold rounded-lg text-gray-300 hover:bg-gray-700 hover:text-white
+                {{ request()->routeIs('schedules.*') ? 'bg-gray-700 text-white' : '' }}">
+            <span class="mr-3">🕒</span>
+            Turmas/Horários
+        </a>
+                {{-- ... links de aprovar matrículas ... --}}
+        <a href="{{ route('admin.enrollments.index') }}"
+        class="flex items-center px-4 py-2 mt-2 text-sm font-semibold rounded-lg text-gray-300 hover:bg-gray-700 hover:text-white
+                {{ request()->routeIs('admin.enrollments.index') ? 'bg-gray-700 text-white' : '' }}">
+            <span class="mr-3">🎓</span>
+            Matrículas
+        </a>
+
         @endif
 
         {{-- Links do Aluno --}}
         @if(auth()->user()->isStudent())
             <p class="px-4 pt-4 pb-2 text-xs text-gray-400 uppercase">Área do Aluno</p>
-            <a href="#" {{-- A rota para o horário será criada depois --}}
-               class="flex items-center px-4 py-2 mt-2 text-sm font-semibold rounded-lg text-gray-600 cursor-not-allowed">
+            <a href="{{ route('my-schedule.index') }}"
+            class="flex items-center px-4 py-2 mt-2 text-sm font-semibold rounded-lg text-gray-300 hover:bg-gray-700 hover:text-white
+                    {{ request()->routeIs('my-schedule.index') ? 'bg-gray-700 text-white' : '' }}">
                 <span class="mr-3">📅</span>
                 Meu Horário
+            </a>
+            <a href="{{ route('enroll.index') }}"
+            class="flex items-center px-4 py-2 mt-2 text-sm font-semibold rounded-lg text-gray-300 hover:bg-gray-700 hover:text-white
+                    {{ request()->routeIs('enroll.index') ? 'bg-gray-700 text-white' : '' }}">
+                <span class="mr-3">📚</span>
+                Inscrever-se em Turmas
             </a>
         @endif
     </nav>
