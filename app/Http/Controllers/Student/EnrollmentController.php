@@ -37,7 +37,7 @@ class EnrollmentController extends Controller
         // O 'wherePivot' filtra os dados da tabela pivô (enrollments).
         $approvedEnrollments = $user->enrollments()
                                     ->wherePivot('status', 'approved')
-                                    ->with(['subject', 'teacher']) // Carrega os dados da turma
+                                    ->orderBy('start_time') // Carrega os dados da turma
                                     ->get()
                                     ->groupBy('day_of_week'); // Agrupa por dia da semana
 
