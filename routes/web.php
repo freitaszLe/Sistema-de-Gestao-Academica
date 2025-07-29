@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\SubjectController;
 Route::get('/', function () {
     return view('welcome');
 });
@@ -27,7 +27,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/enroll', [App\Http\Controllers\Student\EnrollmentController::class, 'index'])->name('enroll.index');
     Route::post('/enroll', [App\Http\Controllers\Student\EnrollmentController::class, 'store'])->name('enroll.store');
     Route::get('/my-schedule', [App\Http\Controllers\Student\EnrollmentController::class, 'mySchedule'])->name('my-schedule.index');
-
-
+    Route::delete('/enroll/{schedule}', [App\Http\Controllers\Student\EnrollmentController::class, 'destroy'])->name('enroll.destroy');
+    Route::get('/subjects/search', [SubjectController::class, 'search'])->name('subjects.search');
 
 require __DIR__.'/auth.php';
