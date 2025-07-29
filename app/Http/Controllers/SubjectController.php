@@ -50,4 +50,15 @@ class SubjectController extends Controller
         return redirect()->route('subjects.index')->with('success', 'Disciplina excluída com sucesso!');
           
     }
+
+    public function search(Request $request)
+    {
+        $query = $request->get('query');
+
+        $subjects = Subject::where('name', 'LIKE', "%{$query}%")
+                           ->limit(5) // Limita a 5 resultados para não poluir a tela
+                           ->get();
+
+        return response()->json($subjects);
+    }
 }

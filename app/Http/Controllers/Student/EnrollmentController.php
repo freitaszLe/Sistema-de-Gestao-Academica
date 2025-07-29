@@ -43,5 +43,19 @@ class EnrollmentController extends Controller
 
         return view('student.schedule.index', ['schedules' => $approvedEnrollments]);
     }
+
+    public function destroy(Schedule $schedule)
+    {
+        $user = Auth::user();
+
+        // Verifica se o usuário está matriculado na turma
+        if ($user->enrollments()->where('schedule_id', $schedule->id)->exists()) {
+            // Remove a matrícula
+            $user->enrollments()->detach($schedule->id);
+            return back()->with('success', 'Matrícula cancelada com sucesso!');
+        }
+
+        return back()->withErrors(['error' => 'Você não está matriculado nesta turma.']);
+    }
     
 }
