@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Enrollment;
+use App\Notifications\EnrollmentStatusUpdated;
 class EnrollmentController extends Controller
 {
     public function index()
@@ -24,6 +25,9 @@ class EnrollmentController extends Controller
         ]);
 
         $enrollment->update(['status' => $request->status]);
+
+        $enrollment->student->notify(new EnrollmentStatusUpdated($enrollment));
+
 
         return back()->with('success', 'Matrícula atualizada com sucesso!');
     }

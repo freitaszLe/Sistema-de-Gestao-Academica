@@ -12,15 +12,10 @@ class EnrollmentController extends Controller
 {
     public function index()
     {
-        // Pega todas as turmas com seus relacionamentos para evitar N+1 queries
-        $schedules = Schedule::with(['subject', 'teacher'])->get();
-        // Pega os IDs das turmas em que o aluno já se inscreveu (qualquer status)
-        $enrolled_ids = Auth::user()->enrollments()->pluck('schedules.id')->toArray();
+    // Pega TODAS as matrículas do aluno, com status e dados da turma
+    $enrollments = Auth::user()->enrollments()->with(['subject', 'teacher'])->get();
 
-        return view('student.enroll.index', [
-            'schedules' => $schedules,
-            'enrolled_ids' => $enrolled_ids,
-        ]);
+    return view('student.enroll.index', ['enrollments' => $enrollments]);
     }
 
     public function store(Request $request)
@@ -42,7 +37,7 @@ class EnrollmentController extends Controller
         // O 'wherePivot' filtra os dados da tabela pivô (enrollments).
         $approvedEnrollments = $user->enrollments()
                                     ->wherePivot('status', 'approved')
-                                    ->with(['subject', 'teacher']) // Carrega os dados da turma
+                                    ->orderBy('start_time') // Carrega os dados da turma
                                     ->get()
                                     ->groupBy('day_of_week'); // Agrupa por dia da semana
 

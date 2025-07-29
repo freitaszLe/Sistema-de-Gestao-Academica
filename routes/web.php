@@ -7,9 +7,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('subjects', App\Http\Controllers\SubjectController::class);
